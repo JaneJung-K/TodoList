@@ -111,7 +111,7 @@ class TodoListCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var strikeThroughView: UIView!
-    
+    //높이가 1짜리인 뷰
     @IBOutlet weak var strikeThroughWidth: NSLayoutConstraint!
     
     var doneButtonTapHandler: ((Bool) -> Void)?
