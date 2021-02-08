@@ -30,7 +30,7 @@ struct Todo: Codable, Equatable {
 }
 
 class TodoManager {
-    
+    //싱글톤! 앱 내에 한 객체가 여기저기 불려서 쓰임
     static let shared = TodoManager()
     
     static var lastId: Int = 0
@@ -38,22 +38,38 @@ class TodoManager {
     var todos: [Todo] = []
     
     func createTodo(detail: String, isToday: Bool) -> Todo {
-        //TODO: create로직 추가
-        return Todo(id: 1, isDone: false, detail: "2", isToday: true)
+        //[x]TODO: create로직 추가
+        let nextID = TodoManager.lastId + 1
+        TodoManager.lastId = nextID
+        return Todo(id: nextID, isDone: false, detail: detail, isToday: isToday)
     }
     
     func addTodo(_ todo: Todo) {
-        //TODO: add로직 추가
+        //[x] TODO: add로직 추가
+        todos.append(todo)
+        saveTodo()
     }
     
     func deleteTodo(_ todo: Todo) {
-        //TODO: delete 로직 추가
+        //[x] TODO: delete 로직 추가
         
+        todos = todos.filter { existingTodo in
+            return existingTodo.id != todo.id
+        }
+        
+        //todos = todos.filter { $0.id != todo.id}
+        
+//        if let index = todos.firstIndex(of: todo) {
+//            todos.remove(at: index)
+//        }
+        saveTodo()
     }
     
     func updateTodo(_ todo: Todo) {
-        //TODO: updatee 로직 추가
-        
+        //[x]TODO: updatee 로직 추가
+        guard let index = todos.firstIndex(of: todo) else { return }
+        todos[index].update(isDone: todo.isDone, detail: todo.detail, isToday: todo.isToday)
+        saveTodo()
     }
     
     func saveTodo() {
